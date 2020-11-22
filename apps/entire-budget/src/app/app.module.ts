@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -20,8 +20,9 @@ import { AuthModule } from '@auth0/auth0-angular';
     AkitaNgRouterStoreModule.forRoot(),
     AuthModule.forRoot({
       domain: 'entire-budget.us.auth0.com',
-      clientId: 'v8Z2uhtGzolw2hld6jGwRfvS6hhreDWx',
+      clientId: 'doN3oTaX0xh9TDPA704sycRHe04tZxda',
     }),
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

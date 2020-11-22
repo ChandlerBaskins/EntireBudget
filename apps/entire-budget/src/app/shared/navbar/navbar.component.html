@@ -1,0 +1,22 @@
+<nav class="blue flex justify-between p-6">
+  <div class="flex ml-2 cursor-pointer">
+    <img src="/assets/LOGO.svg" alt="LOGO" />
+    <h4 class="font-yanone tracking-widest text-gray-200 ml-2 text-xl">
+      Entire Budget
+    </h4>
+  </div>
+  <ul class="mr-2">
+    <a
+      (click)="auth.login()"
+      class="px-2 text-gray-200 text-sm font-quicksand tracking-wider cursor-pointer hover:text-gray-600"
+      >LOGIN</a
+    >
+    <a
+      *ngIf="auth.isAuthenticated$ | async"
+      (click)="auth.logout()"
+      class="px-2 text-gray-200 text-sm font-quicksand tracking-wider cursor-pointer hover:text-gray-600"
+      >LOGOUT</a
+    >
+  </ul>
+  <div *ngIf="auth.user$ | async as user">{{ user.name }}</div>
+</nav>
