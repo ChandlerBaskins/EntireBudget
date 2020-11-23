@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthenticationService } from './auth/state/auth.service';
 
 @Component({
   selector: 'entire-budget-root',
@@ -6,4 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+
+  constructor(public auth: AuthenticationService){}
 }

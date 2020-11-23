@@ -7,9 +7,16 @@
   </div>
   <ul class="mr-2">
     <a
-      (click)="auth.login()"
+      *ngIf="(auth.isAuthenticated$ | async) === false"
+      (click)="login()"
       class="px-2 text-gray-200 text-sm font-quicksand tracking-wider cursor-pointer hover:text-gray-600"
       >LOGIN</a
+    >
+    <a
+      *ngIf="(auth.isAuthenticated$ | async) === false"
+      (click)="register()"
+      class="px-2 text-gray-200 text-sm font-quicksand tracking-wider cursor-pointer hover:text-gray-600"
+      >REGISTER</a
     >
     <a
       *ngIf="auth.isAuthenticated$ | async"
@@ -17,6 +24,7 @@
       class="px-2 text-gray-200 text-sm font-quicksand tracking-wider cursor-pointer hover:text-gray-600"
       >LOGOUT</a
     >
+    <a [routerLink]="['/main']">MAIN</a>
   </ul>
   <div *ngIf="auth.user$ | async as user">{{ user.name }}</div>
 </nav>
