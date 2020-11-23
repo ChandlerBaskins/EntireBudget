@@ -8,6 +8,7 @@ import { LoginHomeComponent } from './login-home/login-home.component';
   declarations: [LoginHomeComponent],
   imports: [
     CommonModule
-  ]
+  ],
+  exports:[LoginHomeComponent]
 })
 export class LoginModule { }

@@ -13,11 +13,16 @@ export class AuthenticationService {
     private auth: AuthService,
     @Inject(DOCUMENT) private doc: Document
   ) {}
+
+  
   isAuthenticated$ = this.auth.isAuthenticated$;
   user$ = this.auth.user$.pipe(tap((res) => this.authStore.update(res)));
   isLoading$ = this.auth.isLoading$;
+
+
   login(options?) {
-    this.auth.loginWithRedirect(options);
+    console.log(options)
+    this.auth.loginWithRedirect({ redirect_uri: "http://localhost:4200/main" });
   }
   logout() {
     this.auth.logout({ returnTo: this.doc.location.origin });

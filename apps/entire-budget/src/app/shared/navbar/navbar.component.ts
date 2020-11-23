@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthenticationService } from '../../auth/state/auth.service';
 
 @Component({
@@ -12,7 +12,12 @@ export class NavbarComponent {
   register(options = { screen_hint: 'signup' }) {
     this.auth.login(options);
   }
+
   login() {
     this.auth.login();
+  }
+
+  logout(){
+    this.auth.logout()
   }
 }
