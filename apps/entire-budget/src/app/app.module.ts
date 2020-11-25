@@ -21,7 +21,6 @@ import { AuthModule } from '@auth0/auth0-angular';
     AuthModule.forRoot({
       domain: 'entire-budget.us.auth0.com',
       clientId: 'doN3oTaX0xh9TDPA704sycRHe04tZxda',
-      redirectUri:"http://localhost:4200/main"
     }),
     SharedModule,
   ],

@@ -13,11 +13,11 @@ export class NavbarComponent {
     this.auth.login(options);
   }
 
-  login() {
-    this.auth.login();
+  login(options = { redirectUri: 'http://localhost:4200/main' }) {
+    this.auth.login(options);
   }
 
-  logout(){
-    this.auth.logout()
+  logout() {
+    this.auth.logout();
   }
 }
