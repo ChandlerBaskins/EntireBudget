@@ -13,7 +13,8 @@ export class NavbarComponent {
     this.auth.loginWithRedirect(options);
   }
 
-  login(options = { redirectUri: 'http://localhost:4200/main' }) {
+  login() {
+    const options = { redirectUri: 'http://localhost:4200/budget' };
     this.auth.loginWithRedirect(options);
   }
 

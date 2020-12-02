@@ -6,7 +6,7 @@ import { LandingComponent } from './pages/landing/landing.component';
 const routes: Routes = [
   { path: '', component: LandingComponent },
   {
-    path: 'main',
+    path: 'budget',
     loadChildren: () =>
       import('./pages/budget/budget.module').then((m) => m.BudgetModule),
     // canLoad: [AuthGuard]

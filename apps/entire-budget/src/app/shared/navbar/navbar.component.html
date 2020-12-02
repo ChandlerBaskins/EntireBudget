@@ -6,18 +6,18 @@
     </h4>
   </div>
   <ul class="mr-2">
-    <a
-      *ngIf="(auth.isAuthenticated$ | async) === false"
-      (click)="login()"
-      class="px-2 text-gray-200 text-sm font-quicksand tracking-wider cursor-pointer hover:text-gray-600"
-      >LOGIN</a
-    >
-    <a
-      *ngIf="(auth.isAuthenticated$ | async) === false"
-      (click)="register()"
-      class="px-2 text-gray-200 text-sm font-quicksand tracking-wider cursor-pointer hover:text-gray-600"
-      >REGISTER</a
-    >
+    <ng-container *ngIf="(auth.isAuthenticated$ | async) === false">
+      <a
+        (click)="login()"
+        class="px-2 text-gray-200 text-sm font-quicksand tracking-wider cursor-pointer hover:text-gray-600"
+        >LOGIN</a
+      >
+      <a
+        (click)="register()"
+        class="px-2 text-gray-200 text-sm font-quicksand tracking-wider cursor-pointer hover:text-gray-600"
+        >REGISTER</a
+      >
+    </ng-container>
     <a
       *ngIf="auth.isAuthenticated$ | async"
       (click)="logout()"
