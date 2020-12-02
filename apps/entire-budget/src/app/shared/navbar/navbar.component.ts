@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject } from '@angular/core';
 import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
@@ -7,14 +8,19 @@ import { AuthService } from '@auth0/auth0-angular';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  constructor(public auth: AuthService) {}
+  constructor(
+    @Inject(DOCUMENT) private doc: Document,
+    public auth: AuthService
+  ) {}
 
   register(options = { screen_hint: 'signup' }) {
     this.auth.loginWithRedirect(options);
   }
 
   login() {
-    const options = { redirectUri: 'http://localhost:4200/budget' };
+    const options = {
+      appState: { target: `${this.doc.location.origin}/budget` },
+    };
     this.auth.loginWithRedirect(options);
   }
 
