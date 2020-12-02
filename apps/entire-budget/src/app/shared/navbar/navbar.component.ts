@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from '../../auth/state/auth.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'navbar',
@@ -7,14 +7,14 @@ import { AuthenticationService } from '../../auth/state/auth.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  constructor(public auth: AuthenticationService) {}
+  constructor(public auth: AuthService) {}
 
   register(options = { screen_hint: 'signup' }) {
-    this.auth.login(options);
+    this.auth.loginWithRedirect(options);
   }
 
   login(options = { redirectUri: 'http://localhost:4200/main' }) {
-    this.auth.login(options);
+    this.auth.loginWithRedirect(options);
   }
 
   logout() {

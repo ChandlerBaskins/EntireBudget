@@ -8,8 +8,8 @@ const routes: Routes = [
   {
     path: 'main',
     loadChildren: () =>
-      import('./pages/budget/budget.module').then(m => m.BudgetModule),
-      canLoad: [AuthGuard]
+      import('./pages/budget/budget.module').then((m) => m.BudgetModule),
+    // canLoad: [AuthGuard]
   },
 ];
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from '../../auth/state/auth.service';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'landing',
@@ -7,7 +7,9 @@ import { AuthenticationService } from '../../auth/state/auth.service';
   styleUrls: ['./landing.component.scss'],
 })
 export class LandingComponent {
-  constructor(public auth: AuthenticationService) {
+  constructor(public auth: AuthService) {}
 
+  login() {
+    this.auth.loginWithRedirect();
   }
 }

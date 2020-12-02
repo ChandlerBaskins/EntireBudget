@@ -17,13 +17,18 @@
       (click)="register()"
       class="px-2 text-gray-200 text-sm font-quicksand tracking-wider cursor-pointer hover:text-gray-600"
       >REGISTER</a
-      >
-      <a
+    >
+    <a
       *ngIf="auth.isAuthenticated$ | async"
       (click)="logout()"
       class="px-2 text-gray-200 text-sm font-quicksand tracking-wider cursor-pointer hover:text-gray-600"
       >LOGOUT</a
-      >
-      <span class="px-2 text-gray-400 text-sm font-quicksand tracking-wider" *ngIf="auth.user$ | async as user"> Hi {{ user.name }}!</span>
+    >
+    <span
+      class="px-2 text-gray-400 text-sm font-quicksand tracking-wider"
+      *ngIf="auth.user$ | async as user"
+    >
+      Hi {{ user.name }}!</span
+    >
   </ul>
 </nav>
