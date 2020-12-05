@@ -1,3 +1,19 @@
 <div class="border-green-500 border-2 h-96 fixed w-full mt-18">
-  <p>summary works!</p>
+  <div class="h-24 blue">
+    <h3>Summary</h3>
+  </div>
+  <div class="h-400 w-400">
+    <ngx-charts-pie-chart
+      [scheme]="colorScheme"
+      [results]="single"
+      [gradient]="gradient"
+      [legend]="showLegend"
+      [legendPosition]="legendPosition"
+      [labels]="showLabels"
+      [doughnut]="isDoughnut"
+      [legend]="false"
+    >
+    </ngx-charts-pie-chart>
+  </div>
+  <div></div>
 </div>

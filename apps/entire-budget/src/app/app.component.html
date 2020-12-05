@@ -1,4 +1,4 @@
-<div *ngIf="auth.isLoading$ | async; else loaded">
+<div *ngIf="auth.isLoading$ || auth.isAuthenticated$ | async; else loaded">
   <h1>loading</h1>
 </div>
 

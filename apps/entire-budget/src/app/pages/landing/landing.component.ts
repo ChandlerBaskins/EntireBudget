@@ -8,7 +8,6 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class LandingComponent {
   constructor(public auth: AuthService) {}
-
   login() {
     this.auth.loginWithRedirect();
   }
