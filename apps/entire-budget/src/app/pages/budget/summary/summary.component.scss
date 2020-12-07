@@ -1,5 +1,5 @@
 .h-96 {
-  height: 81vh;
+  height: 81.5vh;
 }
 
 :host {
@@ -12,4 +12,8 @@
 
 .w-400 {
   width: 400px;
+}
+
+.active {
+  border-bottom: 2px solid lightslategray;
 }
