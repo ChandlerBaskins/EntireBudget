@@ -1,7 +1,19 @@
 .h-96 {
-  height: 81vh;
+  height: 81.5vh;
 }
 
 :host {
   flex: 1;
+}
+
+.h-400 {
+  height: 300px;
+}
+
+.w-400 {
+  width: 400px;
+}
+
+.active {
+  border-bottom: 2px solid lightslategray;
 }

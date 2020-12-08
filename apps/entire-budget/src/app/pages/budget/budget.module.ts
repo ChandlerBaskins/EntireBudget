@@ -6,6 +6,8 @@ import { BudgetRoutingModule } from './budget-routing.module';
 import { SummaryComponent } from './summary/summary.component';
 import { BudgetListComponent } from './budget-list/budget-list.component';
 import { BudgetCardComponent } from './budget-card/budget-card.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { LineItemComponent } from './line-item/line-item.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,8 @@ import { BudgetCardComponent } from './budget-card/budget-card.component';
     SummaryComponent,
     BudgetListComponent,
     BudgetCardComponent,
+    LineItemComponent,
   ],
-  imports: [CommonModule, SharedModule, BudgetRoutingModule],
+  imports: [CommonModule, SharedModule, BudgetRoutingModule, NgxChartsModule],
 })
 export class BudgetModule {}

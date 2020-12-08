@@ -9,7 +9,6 @@ const routes: Routes = [
     path: 'budget',
     loadChildren: () =>
       import('./pages/budget/budget.module').then((m) => m.BudgetModule),
-    canLoad: [AuthGuard],
   },
 ];
 
