@@ -16,9 +16,7 @@ import { DOCUMENT } from '@angular/common';
   declarations: [AppComponent, LandingComponent],
   imports: [
     BrowserModule,
-
     BrowserAnimationsModule,
-
     HttpClientModule,
     AppRoutingModule,
     environment.production ? [] : AkitaNgDevtools.forRoot(),

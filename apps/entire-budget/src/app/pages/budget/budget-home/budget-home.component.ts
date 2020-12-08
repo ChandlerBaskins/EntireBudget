@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { data } from '../../../data';
+import { Budget, BudgetGroup } from '../../../models';
+import { BudgetService } from '../budget.service';
 
 @Component({
   selector: 'main-home',
@@ -8,5 +10,8 @@ import { data } from '../../../data';
   styleUrls: ['./budget-home.component.scss'],
 })
 export class BudgetHomeComponent {
-  data = data.pipe(tap(console.log));
+  budgetGroups$: Observable<BudgetGroup[]>;
+  constructor(private budgetService: BudgetService) {
+    this.budgetGroups$ = this.budgetService.budgetGroups$;
+  }
 }
