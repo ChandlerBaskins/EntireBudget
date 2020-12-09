@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BudgetGroup } from '../../../models';
 
 @Component({
@@ -8,7 +8,4 @@ import { BudgetGroup } from '../../../models';
 })
 export class BudgetCardComponent {
   @Input() group: BudgetGroup;
-  constructor() {
-    console.log(this.group);
-  }
 }

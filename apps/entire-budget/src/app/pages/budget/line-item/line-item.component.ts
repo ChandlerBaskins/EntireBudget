@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { tap } from 'rxjs/operators';
 import { LineItem } from '../../../models';
 
 @Component({
@@ -6,6 +8,11 @@ import { LineItem } from '../../../models';
   templateUrl: './line-item.component.html',
   styleUrls: ['./line-item.component.scss'],
 })
-export class LineItemComponent {
+export class LineItemComponent implements OnChanges {
   @Input() lineItem: LineItem;
+  control: FormControl;
+  ngOnChanges() {
+    this.control = new FormControl(this.lineItem.name, []);
+    this.control.valueChanges.pipe(tap(console.log)).subscribe();
+  }
 }

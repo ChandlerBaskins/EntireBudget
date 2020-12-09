@@ -9,13 +9,11 @@ import { BudgetService } from '../budget.service';
   templateUrl: './budget-list.component.html',
   styleUrls: ['./budget-list.component.scss'],
 })
-export class BudgetListComponent implements OnInit {
+export class BudgetListComponent {
   budgetGroups$: Observable<BudgetGroup[]>;
   constructor(private budgetService: BudgetService) {
     this.budgetGroups$ = this.budgetService.budgetGroups$.pipe(
       tap(console.log)
     );
   }
-
-  ngOnInit(): void {}
 }

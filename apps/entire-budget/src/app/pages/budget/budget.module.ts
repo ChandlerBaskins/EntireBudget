@@ -8,6 +8,7 @@ import { BudgetListComponent } from './budget-list/budget-list.component';
 import { BudgetCardComponent } from './budget-card/budget-card.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { LineItemComponent } from './line-item/line-item.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,12 @@ import { LineItemComponent } from './line-item/line-item.component';
     BudgetCardComponent,
     LineItemComponent,
   ],
-  imports: [CommonModule, SharedModule, BudgetRoutingModule, NgxChartsModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    BudgetRoutingModule,
+    NgxChartsModule,
+    ReactiveFormsModule,
+  ],
 })
 export class BudgetModule {}
