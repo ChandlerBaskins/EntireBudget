@@ -1,11 +1,14 @@
 <div class="flex justify-between mt-4">
   <!-- <h3 class="text-gray-500 text-lg">{{ lineItem.name }}</h3> -->
-  <input [formControl]="control" type="text" />
+  <input
+    (focus)="$event.target.select()"
+    (blur)="onUpdate(lineItem, $event.target.value)"
+    [formControl]="control"
+    type="text"
+  />
   <div class="flex">
     <p class="mx-2 text-gray-700 text-sm">${{ lineItem.planned }}</p>
     <p class="mx-2 text-gray-700 text-sm">${{ lineItem.budgetedAmount }}</p>
   </div>
 </div>
 <div class="bg-green-500 w-full h-px"></div>
-
-<div></div>

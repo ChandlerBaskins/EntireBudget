@@ -1,19 +1,19 @@
 {
   "budgetMonth": "November",
   "budgetTotal": 0,
-  "id": "string",
+  "id": "budgetNovember",
   "groups": [
     {
-      "id": "string",
-      "budgetId": "string",
+      "id": "givingID",
+      "budgetId": "budgetNovember",
       "groupType": "Giving",
       "groupTotal": 0,
       "groupPercentOfWhole": 0,
       "lineItems": [
         {
           "name": "Tithe",
-          "id": "string",
-          "budgetGroupId": "String",
+          "id": "uniqueTitheId",
+          "budgetGroupId": "givingID",
           "budgetedAmount": 200,
           "planned": 100,
           "category": "expense",
@@ -22,7 +22,7 @@
               "paidTo": "Chapel",
               "amount": 100,
               "date": "7/10/2020",
-              "id": "string",
+              "id": "uniqueTransactionForTithe",
               "transactionsId": "string"
             }
           ],
@@ -31,8 +31,8 @@
         },
         {
           "name": "Donations",
-          "id": "string",
-          "budgetGroupId": "String",
+          "id": "uniqueDonationsId",
+          "budgetGroupId": "givingID",
           "budgetedAmount": 200,
           "planned": 100,
           "category": "expense",
@@ -41,7 +41,7 @@
               "paidTo": "Salvation Army",
               "amount": 100,
               "date": "07/10/2020",
-              "id": "string",
+              "id": "SAtransactionID",
               "transactionsId": "string"
             }
           ],
@@ -51,15 +51,15 @@
       ]
     },
     {
-      "budgetId": "string",
-      "id": "string",
+      "budgetId": "budgetNovember",
+      "id": "housingID",
       "groupType": "Housing",
       "groupTotal": 0,
       "groupPercentOfWhole": 0,
       "lineItems": [
         {
-          "id": "string",
-          "budgetGroupId": "String",
+          "id": "uniqueMortgageString",
+          "budgetGroupId": "housingID",
           "name": "Mortgage",
           "budgetedAmount": 585,
           "planned": 585,
@@ -69,7 +69,7 @@
               "paidTo": "USA BANK",
               "amount": 585,
               "date": "07/20/2020",
-              "id": "string",
+              "id": "mortgager transaction string",
               "transactionsId": "string"
             }
           ],
@@ -79,26 +79,26 @@
       ]
     },
     {
-      "budgetId": "string",
+      "budgetId": "budgetNovember",
       "groupType": "Income",
       "groupPercentOfWhole": 0,
       "groupTotal": 0,
-      "id": "string",
+      "id": "incomeID",
       "lineItems": [
         {
           "name": "Paycheck",
-          "budgetGroupId": "string",
+          "budgetGroupId": "incomeID",
           "budgetedAmount": 2000,
           "planned": 2000,
           "category": "income",
           "dueDate": "",
           "groupName": "Income",
-          "id": "string",
+          "id": "paycheckLineitem",
           "transactions": [
             {
               "amount": 2000,
               "date": "07/20/2020",
-              "id": "string",
+              "id": "igotpaidyo",
               "transactionsId": "string"
             }
           ]

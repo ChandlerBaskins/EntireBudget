@@ -1,3 +1,5 @@
+import { CRUD } from './pages/budget/budget.service';
+
 export interface Budget {
   id: string;
   groups: BudgetGroup[];
@@ -24,6 +26,7 @@ export interface LineItem {
   category: 'expense' | 'income';
   transactions: Transaction[];
   groupName: string;
+  action?: CRUD;
 }
 
 export interface Transaction {

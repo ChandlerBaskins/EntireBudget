@@ -11,9 +11,10 @@ import { BudgetService } from '../budget.service';
 })
 export class BudgetListComponent {
   budgetGroups$: Observable<BudgetGroup[]>;
+  test$;
   constructor(private budgetService: BudgetService) {
-    this.budgetGroups$ = this.budgetService.budgetGroups$.pipe(
-      tap(console.log)
-    );
+    this.budgetGroups$ = this.budgetService.crudBudgetGroups$;
+    // this.test$ = this.budgetService.crudBudgetGroups$;
+    // this.test$.subscribe();
   }
 }
