@@ -30,6 +30,25 @@
           "dueDate": ""
         },
         {
+          "name": "Giving",
+          "id": "ugivingid",
+          "budgetGroupId": "givingID",
+          "budgetedAmount": 300,
+          "planned": 100,
+          "category": "expense",
+          "transactions": [
+            {
+              "paidTo": "guy",
+              "amount": 100,
+              "date": "7/10/2020",
+              "id": "fsdgsdfg",
+              "transactionsId": "string"
+            }
+          ],
+          "groupName": "Giving",
+          "dueDate": ""
+        },
+        {
           "name": "Donations",
           "id": "uniqueDonationsId",
           "budgetGroupId": "givingID",

@@ -4,9 +4,15 @@
       <p class="self-end mr-1 text-green-600 text-lg">$</p>
       <h3 class="text-xl text-gray-900">{{ group.groupType }}</h3>
     </div>
-    <div class="flex">
+    <!-- 
+    maybe candidate for custom pipe to return value based off of type -->
+    <div *ngIf="group.groupType === 'Income'" class="flex">
       <p class="mx-2 text-gray-400 text-sm">Planned</p>
       <p class="text-gray-400 text-sm">Recieved</p>
+    </div>
+    <div *ngIf="group.groupType !== 'Income'" class="flex">
+      <p class="mx-2 text-gray-400 text-sm">Budgeted</p>
+      <p class="text-gray-400 text-sm">Paid</p>
     </div>
   </div>
   <line-item
@@ -14,6 +20,6 @@
     [lineItem]="lineItem"
   ></line-item>
   <button class="bg-blue-700 text-gray-200 py-1 px-3 mt-12">
-    ADD PAYCHECK
+    ADD <span class="uppercase">{{ group.groupType }}</span> ITEM
   </button>
 </div>

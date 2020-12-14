@@ -7,7 +7,14 @@ import {
   Subject,
   throwError,
 } from 'rxjs';
-import { catchError, map, scan, shareReplay, tap } from 'rxjs/operators';
+import {
+  catchError,
+  distinctUntilChanged,
+  map,
+  scan,
+  shareReplay,
+  tap,
+} from 'rxjs/operators';
 import { Budget, BudgetGroup, LineItem } from '../../models';
 export enum CRUD {
   CREATE,
@@ -32,6 +39,7 @@ export class BudgetService {
   lineItemAction$ = this.lineItemSubject.asObservable();
 
   crudBudgetGroups$ = merge(this.budgetGroups$, this.lineItemAction$).pipe(
+    distinctUntilChanged(),
     scan((budgetGroup: BudgetGroup[], lineItem: LineItem) =>
       this.doCRUD(budgetGroup, lineItem)
     ),
@@ -39,34 +47,33 @@ export class BudgetService {
     shareReplay(1)
   );
 
+  //Support Methods
+
   onItemChange(newItem: LineItem) {
     this.lineItemSubject.next(newItem);
   }
 
-  onUpdate(budgetGroup, newLineItem) {
-    return this.insertArrayItem(budgetGroup, newLineItem);
-  }
-
   doCRUD(budgetGroup: BudgetGroup[], newLineItem: LineItem): BudgetGroup[] {
     if (newLineItem.action === CRUD.UPDATE) {
-      return this.onUpdate(budgetGroup, newLineItem);
+      return this.updateLineItem(budgetGroup, newLineItem);
     }
 
     return budgetGroup;
   }
 
-  insertArrayItem(budgetGroup, newLineItem) {
+  updateLineItem(budgetGroup, newLineItem) {
+    return this.updateBudgetGroup(budgetGroup, newLineItem);
+  }
+  updateBudgetGroup(budgetGroup: BudgetGroup[], newLineItem: LineItem) {
     //find budget group that line item is being changed
     const group = budgetGroup.find(
       (group) => group.id === newLineItem.budgetGroupId
     );
-    //budget groups id
+    //budget groups index
     const groupIDX = budgetGroup.indexOf(group);
     // create your new line item group
-    const newLineItemGroup = [
-      newLineItem,
-      ...group.lineItems.filter((item) => item.id !== newLineItem.id),
-    ];
+    const newLineItemGroup = this.updateLineItemArr(group, newLineItem);
+
     //create your new group
     const newGroup = { ...group, lineItems: newLineItemGroup } as BudgetGroup;
 
@@ -75,5 +82,25 @@ export class BudgetService {
     const oneHalf = baseArr.slice(0, groupIDX);
     const otherPart = baseArr.slice(groupIDX, baseArr.length);
     return [...oneHalf, newGroup, ...otherPart];
+  }
+
+  updateLineItemArr(budgetGroup: BudgetGroup, newLineItem: LineItem) {
+    // lineitem id
+    const lineItem = budgetGroup.lineItems.find((i) => i.id === newLineItem.id);
+    const lineItemIndex = budgetGroup.lineItems.indexOf(lineItem);
+
+    // base line item array
+    const lineItemBase = budgetGroup.lineItems.filter(
+      (item) => item.id !== newLineItem.id
+    );
+
+    // split the array and insert new item
+    const lineItemHalf = lineItemBase.slice(0, lineItemIndex);
+    const lineItemOtherHalf = lineItemBase.slice(
+      lineItemIndex,
+      lineItemBase.length
+    );
+
+    return [...lineItemHalf, newLineItem, ...lineItemOtherHalf];
   }
 }
