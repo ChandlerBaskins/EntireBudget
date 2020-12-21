@@ -10,25 +10,25 @@
       ],
       "parserOptions": {
         "project": ["apps/entire-budget/tsconfig.*?.json"]
-      },
-      "rules": {
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": "entire-budget",
-            "style": "camelCase"
-          }
-        ],
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": "entire-budget",
-            "style": "kebab-case"
-          }
-        ]
       }
+      // "rules": {
+      //   "@angular-eslint/directive-selector": [
+      //     "error",
+      //     {
+      //       "type": "attribute",
+      //       "prefix": "entire-budget",
+      //       "style": "camelCase"
+      //     }
+      //   ],
+      //   "@angular-eslint/component-selector": [
+      //     "error",
+      //     {
+      //       "type": "element",
+      //       "prefix": "entire-budget",
+      //       "style": "kebab-case"
+      //     }
+      //   ]
+      // }
     },
     {
       "files": ["*.html"],

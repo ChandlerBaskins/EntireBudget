@@ -1,12 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  combineLatest,
-  merge,
-  Subject,
-  throwError,
-} from 'rxjs';
+import { merge, Subject, throwError } from 'rxjs';
 import {
   catchError,
   distinctUntilChanged,
@@ -54,11 +48,7 @@ export class BudgetService {
   }
 
   doCRUD(budgetGroup: BudgetGroup[], newLineItem: LineItem): BudgetGroup[] {
-    if (newLineItem.action === CRUD.UPDATE) {
-      return this.updateLineItem(budgetGroup, newLineItem);
-    }
-
-    return budgetGroup;
+    return this.updateBudgetGroup(budgetGroup, newLineItem);
   }
 
   updateLineItem(budgetGroup, newLineItem) {
@@ -72,16 +62,26 @@ export class BudgetService {
     //budget groups index
     const groupIDX = budgetGroup.indexOf(group);
     // create your new line item group
-    const newLineItemGroup = this.updateLineItemArr(group, newLineItem);
 
-    //create your new group
-    const newGroup = { ...group, lineItems: newLineItemGroup } as BudgetGroup;
+    if (newLineItem.action === CRUD.UPDATE) {
+      const newLineItemGroup = this.updateLineItemArr(group, newLineItem);
+      const newGroup = { ...group, lineItems: newLineItemGroup } as BudgetGroup;
 
-    const baseArr = budgetGroup.filter((g) => g.id !== group.id);
-    //split the array and insert the new item
-    const oneHalf = baseArr.slice(0, groupIDX);
-    const otherPart = baseArr.slice(groupIDX, baseArr.length);
-    return [...oneHalf, newGroup, ...otherPart];
+      const baseArr = budgetGroup.filter((g) => g.id !== group.id);
+      //split the array and insert the new item
+      const oneHalf = baseArr.slice(0, groupIDX);
+      const otherPart = baseArr.slice(groupIDX, baseArr.length);
+      return [...oneHalf, newGroup, ...otherPart];
+    }
+    if (newLineItem.action === CRUD.CREATE) {
+      const newLineItemGroup = [...group.lineItems, newLineItem];
+      const newGroup = { ...group, lineItems: newLineItemGroup } as BudgetGroup;
+      const baseArr = budgetGroup.filter((g) => g.id !== group.id);
+      //split the array and insert the new item
+      const oneHalf = baseArr.slice(0, groupIDX);
+      const otherPart = baseArr.slice(groupIDX, baseArr.length);
+      return [...oneHalf, newGroup, ...otherPart];
+    }
   }
 
   updateLineItemArr(budgetGroup: BudgetGroup, newLineItem: LineItem) {

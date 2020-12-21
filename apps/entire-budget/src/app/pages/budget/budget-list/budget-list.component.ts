@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { BudgetGroup } from '../../../models';
+import { BudgetGroup, LineItem } from '../../../models';
 import { BudgetService } from '../budget.service';
 
 @Component({
@@ -11,10 +11,11 @@ import { BudgetService } from '../budget.service';
 })
 export class BudgetListComponent {
   budgetGroups$: Observable<BudgetGroup[]>;
-  test$;
   constructor(private budgetService: BudgetService) {
     this.budgetGroups$ = this.budgetService.crudBudgetGroups$;
-    // this.test$ = this.budgetService.crudBudgetGroups$;
-    // this.test$.subscribe();
+  }
+
+  onAddItem(newLineItem: LineItem) {
+    this.budgetService.onItemChange(newLineItem);
   }
 }

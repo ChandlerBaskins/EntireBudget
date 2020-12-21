@@ -11,9 +11,10 @@ export interface BudgetGroup {
   id: string;
   budgetId: string;
   lineItems: LineItem[];
-  groupType: string;
+  groupType: 'Expense' | 'Income';
   groupTotal: number;
   groupPercentOfWhole: number;
+  groupName: string;
 }
 
 export interface LineItem {
@@ -23,7 +24,7 @@ export interface LineItem {
   budgetedAmount: number;
   planned: number;
   dueDate: string;
-  category: 'expense' | 'income';
+  category: 'Expense' | 'Income';
   transactions: Transaction[];
   groupName: string;
   action?: CRUD;

@@ -2,6 +2,7 @@
   <h3 class="text-center text-xl">NOVEMBER 2020</h3>
   <ng-container *ngIf="budgetGroups$ | async as budgetGroups">
     <budget-card
+      (additem)="onAddItem($event)"
       *ngFor="let group of budgetGroups"
       [group]="group"
     ></budget-card>

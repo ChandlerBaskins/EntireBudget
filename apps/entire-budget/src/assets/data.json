@@ -6,9 +6,10 @@
     {
       "id": "givingID",
       "budgetId": "budgetNovember",
-      "groupType": "Giving",
+      "groupName": "Giving",
       "groupTotal": 0,
       "groupPercentOfWhole": 0,
+      "groupType": "Expense",
       "lineItems": [
         {
           "name": "Tithe",
@@ -16,7 +17,7 @@
           "budgetGroupId": "givingID",
           "budgetedAmount": 200,
           "planned": 100,
-          "category": "expense",
+          "category": "Expense",
           "transactions": [
             {
               "paidTo": "Chapel",
@@ -35,7 +36,7 @@
           "budgetGroupId": "givingID",
           "budgetedAmount": 300,
           "planned": 100,
-          "category": "expense",
+          "category": "Expense",
           "transactions": [
             {
               "paidTo": "guy",
@@ -54,7 +55,7 @@
           "budgetGroupId": "givingID",
           "budgetedAmount": 200,
           "planned": 100,
-          "category": "expense",
+          "category": "Expense",
           "transactions": [
             {
               "paidTo": "Salvation Army",
@@ -72,7 +73,8 @@
     {
       "budgetId": "budgetNovember",
       "id": "housingID",
-      "groupType": "Housing",
+      "groupName": "Mortgage",
+      "groupType": "Expense",
       "groupTotal": 0,
       "groupPercentOfWhole": 0,
       "lineItems": [
@@ -82,7 +84,7 @@
           "name": "Mortgage",
           "budgetedAmount": 585,
           "planned": 585,
-          "category": "expense",
+          "category": "Expense",
           "transactions": [
             {
               "paidTo": "USA BANK",
@@ -100,6 +102,7 @@
     {
       "budgetId": "budgetNovember",
       "groupType": "Income",
+      "groupName": "Paycheck",
       "groupPercentOfWhole": 0,
       "groupTotal": 0,
       "id": "incomeID",
@@ -109,7 +112,7 @@
           "budgetGroupId": "incomeID",
           "budgetedAmount": 2000,
           "planned": 2000,
-          "category": "income",
+          "category": "Income",
           "dueDate": "",
           "groupName": "Income",
           "id": "paycheckLineitem",
