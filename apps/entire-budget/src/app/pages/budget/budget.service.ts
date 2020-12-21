@@ -31,8 +31,10 @@ export class BudgetService {
 
   private lineItemSubject = new Subject<LineItem>();
   lineItemAction$ = this.lineItemSubject.asObservable();
+  private budgetGroupSubject = new Subject<BudgetGroup>();
+  budgetGroupAction$ = this.budgetGroupSubject.asObservable();
 
-  crudBudgetGroups$ = merge(this.budgetGroups$, this.lineItemAction$).pipe(
+  crudLineItemGroups$ = merge(this.budgetGroups$, this.lineItemAction$).pipe(
     distinctUntilChanged(),
     scan((budgetGroup: BudgetGroup[], lineItem: LineItem) =>
       this.doCRUD(budgetGroup, lineItem)
@@ -51,19 +53,18 @@ export class BudgetService {
     return this.updateBudgetGroup(budgetGroup, newLineItem);
   }
 
-  updateLineItem(budgetGroup, newLineItem) {
-    return this.updateBudgetGroup(budgetGroup, newLineItem);
-  }
   updateBudgetGroup(budgetGroup: BudgetGroup[], newLineItem: LineItem) {
     //find budget group that line item is being changed
-    const group = budgetGroup.find(
-      (group) => group.id === newLineItem.budgetGroupId
-    );
-    //budget groups index
-    const groupIDX = budgetGroup.indexOf(group);
+
     // create your new line item group
 
+    //??CANDIDATE FOR REFACTOR
     if (newLineItem.action === CRUD.UPDATE) {
+      const group = budgetGroup.find(
+        (group) => group.id === newLineItem.budgetGroupId
+      );
+      //budget groups index
+      const groupIDX = budgetGroup.indexOf(group);
       const newLineItemGroup = this.updateLineItemArr(group, newLineItem);
       const newGroup = { ...group, lineItems: newLineItemGroup } as BudgetGroup;
 
@@ -74,7 +75,12 @@ export class BudgetService {
       return [...oneHalf, newGroup, ...otherPart];
     }
     if (newLineItem.action === CRUD.CREATE) {
+      const group = budgetGroup.find(
+        (group) => group.id === newLineItem.budgetGroupId
+      );
       const newLineItemGroup = [...group.lineItems, newLineItem];
+      //budget groups index
+      const groupIDX = budgetGroup.indexOf(group);
       const newGroup = { ...group, lineItems: newLineItemGroup } as BudgetGroup;
       const baseArr = budgetGroup.filter((g) => g.id !== group.id);
       //split the array and insert the new item

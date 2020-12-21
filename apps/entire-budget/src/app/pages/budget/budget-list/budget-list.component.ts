@@ -12,7 +12,7 @@ import { BudgetService } from '../budget.service';
 export class BudgetListComponent {
   budgetGroups$: Observable<BudgetGroup[]>;
   constructor(private budgetService: BudgetService) {
-    this.budgetGroups$ = this.budgetService.crudBudgetGroups$;
+    this.budgetGroups$ = this.budgetService.crudLineItemGroups$;
   }
 
   onAddItem(newLineItem: LineItem) {

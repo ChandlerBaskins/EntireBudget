@@ -3,7 +3,7 @@
 }
 
 :host {
-  flex: 1;
+  flex: 0 0 400px;
 }
 
 .h-400 {
@@ -16,4 +16,11 @@
 
 .active {
   border-bottom: 2px solid lightslategray;
+}
+
+.w-95 {
+  width: 95%;
+}
+:host {
+  width: 40%;
 }
