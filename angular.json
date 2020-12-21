@@ -28,9 +28,7 @@
               "apps/entire-budget/src/favicon.ico",
               "apps/entire-budget/src/assets"
             ],
-            "styles": [
-              "apps/entire-budget/src/styles.scss"
-            ],
+            "styles": ["apps/entire-budget/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -86,7 +84,8 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": [
-              "apps/entire-budget/src/**/*.ts"
+              "apps/entire-budget/src/**/*.ts",
+              "apps/entire-budget/src/**/*.html"
             ]
           }
         },
@@ -94,8 +93,10 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/entire-budget/jest.config.js",
-            "passWithNoTests": true
-          }
+            "passWithNoTests": true,
+            "tsConfig": "apps/entire-budget/tsconfig.spec.json"
+          },
+          "outputs": ["coverage/apps/entire-budget"]
         }
       }
     },
@@ -120,9 +121,7 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/entire-budget-e2e/**/*.{js,ts}"
-            ]
+            "lintFilePatterns": ["apps/entire-budget-e2e/**/*.{js,ts}"]
           }
         }
       }
@@ -140,9 +139,7 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": [
-              "apps/api/src/assets"
-            ]
+            "assets": ["apps/api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -156,7 +153,8 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@nrwl/node:execute",
@@ -167,17 +165,17 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "apps/api/**/*.ts"
-            ]
+            "lintFilePatterns": ["apps/api/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/api/jest.config.js",
-            "passWithNoTests": true
-          }
+            "passWithNoTests": true,
+            "tsConfig": "apps/api/tsconfig.spec.json"
+          },
+          "outputs": ["coverage/apps/api"]
         }
       }
     },
@@ -190,17 +188,17 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "libs/api-interfaces/**/*.ts"
-            ]
+            "lintFilePatterns": ["libs/api-interfaces/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/api-interfaces/jest.config.js",
-            "passWithNoTests": true
-          }
+            "passWithNoTests": true,
+            "tsConfig": "libs/api-interfaces/tsconfig.spec.json"
+          },
+          "outputs": ["coverage/libs/api-interfaces"]
         }
       }
     }
