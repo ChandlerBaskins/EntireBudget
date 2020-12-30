@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BudgetGroup, LineItem } from '../../../models';
-import { BudgetService } from '../budget.service';
+import { ActionCommand, BudgetService, CRUD } from '../budget.service';
 
 @Component({
   selector: 'budget-list',
@@ -16,6 +16,7 @@ export class BudgetListComponent {
   }
 
   onAddItem(newLineItem: LineItem) {
-    this.budgetService.onItemChange(newLineItem);
+    const item: ActionCommand = { item: newLineItem, command: CRUD.CREATE };
+    this.budgetService.onCommand(item);
   }
 }
