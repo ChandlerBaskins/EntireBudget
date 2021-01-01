@@ -5,6 +5,7 @@
   </div>
   <ng-container *ngIf="budgetGroups$ | async as budgetGroups">
     <budget-card
+      (changeBudgetName)="onBudgetNameChange($event)"
       (additem)="onAddItem($event)"
       *ngFor="let group of budgetGroups"
       [group]="group"

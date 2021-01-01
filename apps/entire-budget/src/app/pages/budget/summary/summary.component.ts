@@ -42,7 +42,7 @@ export class SummaryComponent {
   onAddNewGroup() {
     const newGroup: BudgetGroup = {
       budgetId: 'budgetNovember',
-      groupName: 'new GRouup',
+      groupName: 'New Group',
       groupPercentOfWhole: 0,
       groupTotal: 0,
       groupType: 'Expense',

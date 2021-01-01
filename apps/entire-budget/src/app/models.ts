@@ -15,6 +15,7 @@ export interface BudgetGroup {
   groupTotal: number;
   groupPercentOfWhole: number;
   groupName: string;
+  newName?: string;
 }
 
 export interface LineItem {

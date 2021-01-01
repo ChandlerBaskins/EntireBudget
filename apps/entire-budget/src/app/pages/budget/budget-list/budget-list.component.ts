@@ -19,4 +19,9 @@ export class BudgetListComponent {
     const item: ActionCommand = { item: newLineItem, command: CRUD.CREATE };
     this.budgetService.onCommand(item);
   }
+
+  onBudgetNameChange(budget: BudgetGroup) {
+    const item: ActionCommand = { item: budget, command: CRUD.UPDATE };
+    this.budgetService.onCommand(item);
+  }
 }

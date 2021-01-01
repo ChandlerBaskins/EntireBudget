@@ -39,15 +39,12 @@ export class BudgetService {
 
   private actionSubject = new Subject<ActionCommand>();
   actionCommand$ = this.actionSubject.asObservable();
-  // private budgetGroupSubject = new Subject<BudgetGroup>();
-  // budgetGroupAction$ = this.budgetGroupSubject.asObservable();
 
   crudLineItemGroups$ = merge(this.budgetGroups$, this.actionCommand$).pipe(
     distinctUntilChanged(),
     scan((budgetGroup: BudgetGroup[], action: ActionCommand) =>
       this.doCRUD(budgetGroup, action)
     ),
-    tap((val) => console.log('inpipe', val)),
     shareReplay(1)
   );
 
@@ -67,7 +64,9 @@ export class BudgetService {
     if (action.command === CRUD.CREATE && !isLineItem(action.item)) {
       return this.createNewBudgetGroup(budgetGroup, action.item);
     }
-    // return this.updateBudgetGroup(budgetGroup, action);
+    if (action.command === CRUD.UPDATE && !isLineItem(action.item)) {
+      return this.updateBudget(budgetGroup, action.item);
+    }
   }
 
   updateLineItem(budgetGroup: BudgetGroup[], newLineItem: LineItem) {
@@ -130,5 +129,17 @@ export class BudgetService {
     newBudgetGroup: BudgetGroup
   ) {
     return [...budgetGroup, newBudgetGroup];
+  }
+
+  updateBudget(budgetGroup: BudgetGroup[], budget: BudgetGroup) {
+    const group = budgetGroup.find((group) => group.id === budget.id);
+    //budget groups index
+    const groupIDX = budgetGroup.indexOf(group);
+    const newGroup = { ...budget, groupName: budget.newName };
+    const baseArr = budgetGroup.filter((g) => g.id !== group.id);
+    //split the array and insert the new item
+    const oneHalf = baseArr.slice(0, groupIDX);
+    const otherPart = baseArr.slice(groupIDX, baseArr.length);
+    return [...oneHalf, newGroup, ...otherPart];
   }
 }
