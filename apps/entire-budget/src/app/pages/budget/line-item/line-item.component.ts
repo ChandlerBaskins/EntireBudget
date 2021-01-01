@@ -2,7 +2,7 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { tap } from 'rxjs/operators';
 import { LineItem } from '../../../models';
-import { BudgetService, CRUD } from '../budget.service';
+import { ActionCommand, BudgetService, CRUD } from '../budget.service';
 
 @Component({
   selector: 'line-item',
@@ -19,7 +19,10 @@ export class LineItemComponent implements OnChanges {
 
   onUpdate(lineItem: LineItem, newItemName: string) {
     if (lineItem.name === newItemName) return;
-    const newItem = { ...lineItem, name: newItemName, action: CRUD.UPDATE };
-    this.budgetService.onItemChange(newItem);
+
+    const updateLineItem = { ...lineItem, name: newItemName };
+    const item: ActionCommand = { command: CRUD.UPDATE, item: updateLineItem };
+
+    this.budgetService.onCommand(item);
   }
 }

@@ -1,15 +1,24 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+} from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { BudgetGroup, LineItem } from '../../../models';
-import { CRUD } from '../budget.service';
+import { ActionCommand, CRUD } from '../budget.service';
 
 @Component({
   selector: 'budget-card',
   templateUrl: './budget-card.component.html',
   styleUrls: ['./budget-card.component.scss'],
 })
-export class BudgetCardComponent {
+export class BudgetCardComponent implements OnChanges {
   @Input() group: BudgetGroup;
   @Output() additem = new EventEmitter<LineItem>();
+  @Output() changeBudgetName = new EventEmitter<BudgetGroup>();
+  control: FormControl;
 
   additemClick() {
     const newLineItem: LineItem = {
@@ -25,5 +34,15 @@ export class BudgetCardComponent {
       category: this.group.groupType,
     };
     this.additem.emit(newLineItem);
+  }
+
+  onUpdate(group: BudgetGroup, name: string) {
+    if (group.groupName === name) return;
+    const budget = { ...group, newName: name };
+    this.changeBudgetName.emit(budget);
+  }
+
+  ngOnChanges() {
+    this.control = new FormControl(this.group.groupName);
   }
 }

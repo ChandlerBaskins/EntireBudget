@@ -10,11 +10,19 @@ import {
   tap,
 } from 'rxjs/operators';
 import { Budget, BudgetGroup, LineItem } from '../../models';
+import { isLineItem } from '../../shared/isLineItemGuard';
+
 export enum CRUD {
   CREATE,
   UPDATE,
   DELETE,
 }
+
+export interface ActionCommand {
+  item: LineItem | BudgetGroup;
+  command: CRUD;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -29,65 +37,71 @@ export class BudgetService {
   );
   budgetGroups$ = this.budget$.pipe(map((budget) => budget.groups));
 
-  private lineItemSubject = new Subject<LineItem>();
-  lineItemAction$ = this.lineItemSubject.asObservable();
-  private budgetGroupSubject = new Subject<BudgetGroup>();
-  budgetGroupAction$ = this.budgetGroupSubject.asObservable();
+  private actionSubject = new Subject<ActionCommand>();
+  actionCommand$ = this.actionSubject.asObservable();
 
-  crudLineItemGroups$ = merge(this.budgetGroups$, this.lineItemAction$).pipe(
+  crudLineItemGroups$ = merge(this.budgetGroups$, this.actionCommand$).pipe(
     distinctUntilChanged(),
-    scan((budgetGroup: BudgetGroup[], lineItem: LineItem) =>
-      this.doCRUD(budgetGroup, lineItem)
+    scan((budgetGroup: BudgetGroup[], action: ActionCommand) =>
+      this.doCRUD(budgetGroup, action)
     ),
-    tap((val) => console.log('inpipe', val)),
     shareReplay(1)
   );
 
   //Support Methods
 
-  onItemChange(newItem: LineItem) {
-    this.lineItemSubject.next(newItem);
+  onCommand(item: ActionCommand) {
+    this.actionSubject.next(item);
   }
 
-  doCRUD(budgetGroup: BudgetGroup[], newLineItem: LineItem): BudgetGroup[] {
-    return this.updateBudgetGroup(budgetGroup, newLineItem);
+  doCRUD(budgetGroup: BudgetGroup[], action: ActionCommand): BudgetGroup[] {
+    if (action.command === CRUD.UPDATE && isLineItem(action.item)) {
+      return this.updateLineItem(budgetGroup, action.item);
+    }
+    if (action.command === CRUD.CREATE && isLineItem(action.item)) {
+      return this.createNewLineItem(budgetGroup, action.item);
+    }
+    if (action.command === CRUD.CREATE && !isLineItem(action.item)) {
+      return this.createNewBudgetGroup(budgetGroup, action.item);
+    }
+    if (action.command === CRUD.UPDATE && !isLineItem(action.item)) {
+      return this.updateBudget(budgetGroup, action.item);
+    }
   }
 
-  updateBudgetGroup(budgetGroup: BudgetGroup[], newLineItem: LineItem) {
+  updateLineItem(budgetGroup: BudgetGroup[], newLineItem: LineItem) {
     //find budget group that line item is being changed
 
     // create your new line item group
 
-    //??CANDIDATE FOR REFACTOR
-    if (newLineItem.action === CRUD.UPDATE) {
-      const group = budgetGroup.find(
-        (group) => group.id === newLineItem.budgetGroupId
-      );
-      //budget groups index
-      const groupIDX = budgetGroup.indexOf(group);
-      const newLineItemGroup = this.updateLineItemArr(group, newLineItem);
-      const newGroup = { ...group, lineItems: newLineItemGroup } as BudgetGroup;
+    const group = budgetGroup.find(
+      (group) => group.id === newLineItem.budgetGroupId
+    );
+    //budget groups index
+    const groupIDX = budgetGroup.indexOf(group);
+    const newLineItemGroup = this.updateLineItemArr(group, newLineItem);
+    const newGroup = { ...group, lineItems: newLineItemGroup } as BudgetGroup;
 
-      const baseArr = budgetGroup.filter((g) => g.id !== group.id);
-      //split the array and insert the new item
-      const oneHalf = baseArr.slice(0, groupIDX);
-      const otherPart = baseArr.slice(groupIDX, baseArr.length);
-      return [...oneHalf, newGroup, ...otherPart];
-    }
-    if (newLineItem.action === CRUD.CREATE) {
-      const group = budgetGroup.find(
-        (group) => group.id === newLineItem.budgetGroupId
-      );
-      const newLineItemGroup = [...group.lineItems, newLineItem];
-      //budget groups index
-      const groupIDX = budgetGroup.indexOf(group);
-      const newGroup = { ...group, lineItems: newLineItemGroup } as BudgetGroup;
-      const baseArr = budgetGroup.filter((g) => g.id !== group.id);
-      //split the array and insert the new item
-      const oneHalf = baseArr.slice(0, groupIDX);
-      const otherPart = baseArr.slice(groupIDX, baseArr.length);
-      return [...oneHalf, newGroup, ...otherPart];
-    }
+    const baseArr = budgetGroup.filter((g) => g.id !== group.id);
+    //split the array and insert the new item
+    const oneHalf = baseArr.slice(0, groupIDX);
+    const otherPart = baseArr.slice(groupIDX, baseArr.length);
+    return [...oneHalf, newGroup, ...otherPart];
+  }
+
+  createNewLineItem(budgetGroup: BudgetGroup[], newLineItem: LineItem) {
+    const group = budgetGroup.find(
+      (group) => group.id === newLineItem.budgetGroupId
+    );
+    const newLineItemGroup = [...group.lineItems, newLineItem];
+    //budget groups index
+    const groupIDX = budgetGroup.indexOf(group);
+    const newGroup = { ...group, lineItems: newLineItemGroup } as BudgetGroup;
+    const baseArr = budgetGroup.filter((g) => g.id !== group.id);
+    //split the array and insert the new item
+    const oneHalf = baseArr.slice(0, groupIDX);
+    const otherPart = baseArr.slice(groupIDX, baseArr.length);
+    return [...oneHalf, newGroup, ...otherPart];
   }
 
   updateLineItemArr(budgetGroup: BudgetGroup, newLineItem: LineItem) {
@@ -108,5 +122,24 @@ export class BudgetService {
     );
 
     return [...lineItemHalf, newLineItem, ...lineItemOtherHalf];
+  }
+
+  createNewBudgetGroup(
+    budgetGroup: BudgetGroup[],
+    newBudgetGroup: BudgetGroup
+  ) {
+    return [...budgetGroup, newBudgetGroup];
+  }
+
+  updateBudget(budgetGroup: BudgetGroup[], budget: BudgetGroup) {
+    const group = budgetGroup.find((group) => group.id === budget.id);
+    //budget groups index
+    const groupIDX = budgetGroup.indexOf(group);
+    const newGroup = { ...budget, groupName: budget.newName };
+    const baseArr = budgetGroup.filter((g) => g.id !== group.id);
+    //split the array and insert the new item
+    const oneHalf = baseArr.slice(0, groupIDX);
+    const otherPart = baseArr.slice(groupIDX, baseArr.length);
+    return [...oneHalf, newGroup, ...otherPart];
   }
 }
