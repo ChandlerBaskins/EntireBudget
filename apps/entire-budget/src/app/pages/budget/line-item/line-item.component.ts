@@ -12,17 +12,30 @@ import { ActionCommand, BudgetService, CRUD } from '../budget.service';
 export class LineItemComponent implements OnChanges {
   constructor(private budgetService: BudgetService) {}
   @Input() lineItem: LineItem;
-  control: FormControl;
+  lineItemName: FormControl;
+  lineItemBudgeted: FormControl;
+  lineItemPaid: FormControl;
   ngOnChanges() {
-    this.control = new FormControl(this.lineItem.name);
+    this.lineItemName = new FormControl(this.lineItem.name);
+    this.lineItemBudgeted = new FormControl(this.lineItem.budgetedAmount);
+    this.lineItemPaid = new FormControl(this.lineItem.planned);
   }
 
-  onUpdate(lineItem: LineItem, newItemName: string) {
+  onUpdateName(lineItem: LineItem, newItemName: string) {
     if (lineItem.name === newItemName) return;
 
-    const updateLineItem = { ...lineItem, name: newItemName };
-    const item: ActionCommand = { command: CRUD.UPDATE, item: updateLineItem };
+    const updatedLineItem = { ...lineItem, name: newItemName };
+    const item: ActionCommand = { command: CRUD.UPDATE, item: updatedLineItem };
 
+    this.budgetService.onCommand(item);
+  }
+
+  onUpdateNumbers(lineItemProperty: string, newItemValue: string) {
+    if (this.lineItem[lineItemProperty] == newItemValue) return;
+    console.log(lineItemProperty);
+    const itemValue = Number(newItemValue);
+    const updatedLineItem = { ...this.lineItem, [lineItemProperty]: itemValue };
+    const item: ActionCommand = { command: CRUD.UPDATE, item: updatedLineItem };
     this.budgetService.onCommand(item);
   }
 }

@@ -45,6 +45,7 @@ export class BudgetService {
     scan((budgetGroup: BudgetGroup[], action: ActionCommand) =>
       this.doCRUD(budgetGroup, action)
     ),
+    tap((v) => console.log('THe final VALue', v)),
     shareReplay(1)
   );
 
