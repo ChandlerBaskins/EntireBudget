@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { merge, Subject, throwError } from 'rxjs';
+import { combineLatest, merge, Subject, throwError } from 'rxjs';
 import {
   catchError,
   distinctUntilChanged,
@@ -40,7 +40,7 @@ export class BudgetService {
   private actionSubject = new Subject<ActionCommand>();
   actionCommand$ = this.actionSubject.asObservable();
 
-  crudLineItemGroups$ = merge(this.budgetGroups$, this.actionCommand$).pipe(
+  crudBudgetGroups$ = merge(this.budgetGroups$, this.actionCommand$).pipe(
     distinctUntilChanged(),
     scan((budgetGroup: BudgetGroup[], action: ActionCommand) =>
       this.doCRUD(budgetGroup, action)
@@ -48,11 +48,31 @@ export class BudgetService {
     tap((v) => console.log('THe final VALue', v)),
     shareReplay(1)
   );
+  selectedLineItemAction = new Subject<LineItem>();
+
+  selectedLineItem$ = combineLatest([
+    this.crudBudgetGroups$,
+    this.selectedLineItemAction,
+  ]).pipe(
+    map(([budgetGroup, selectedItem]) => {
+      const selectedGroup = budgetGroup.find(
+        (group) => group.id === selectedItem.budgetGroupId
+      );
+      const selectedLineItem = selectedGroup.lineItems.find(
+        (li) => li.id === selectedItem.id
+      );
+      return selectedLineItem;
+    })
+  );
 
   //Support Methods
 
   onCommand(item: ActionCommand) {
     this.actionSubject.next(item);
+  }
+
+  selectedLineItem(selectedLineItem: LineItem) {
+    this.selectedLineItemAction.next(selectedLineItem);
   }
 
   doCRUD(budgetGroup: BudgetGroup[], action: ActionCommand): BudgetGroup[] {

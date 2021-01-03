@@ -1,7 +1,7 @@
 <div class="flex justify-between mt-4">
   <!-- <h3 class="text-gray-500 text-lg">{{ lineItem.name }}</h3> -->
   <input
-    (focus)="$event.target.select()"
+    (focus)="onClick($event)"
     (blur)="onUpdateName(lineItem, $event.target.value)"
     [formControl]="lineItemName"
     type="text"
@@ -9,14 +9,14 @@
   <div class="flex">
     <input
       class="w-8 mx-2 text-gray-700 text-sm"
-      (focus)="$event.target.select()"
+      (focus)="onClick($event)"
       (blur)="onUpdateNumbers('budgetedAmount', $event.target.value)"
       [formControl]="lineItemBudgeted"
       type="text"
     />
     <input
       class="w-8 mx-2 text-gray-700 text-sm"
-      (focus)="$event.target.select()"
+      (focus)="onClick($event)"
       (blur)="onUpdateNumbers('planned', $event.target.value)"
       [formControl]="lineItemPaid"
       type="text"

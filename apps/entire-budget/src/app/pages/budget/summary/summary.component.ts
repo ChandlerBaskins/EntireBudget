@@ -7,7 +7,9 @@ import { ActionCommand, BudgetService, CRUD } from '../budget.service';
   styleUrls: ['./summary.component.scss'],
 })
 export class SummaryComponent {
-  constructor(private budgetService: BudgetService) {}
+  constructor(private budgetService: BudgetService) {
+    this.budgetService.selectedLineItem$.subscribe(console.log);
+  }
   single = [
     {
       name: 'Germany',

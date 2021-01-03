@@ -30,6 +30,11 @@ export class LineItemComponent implements OnChanges {
     this.budgetService.onCommand(item);
   }
 
+  onClick(event) {
+    event.target.select();
+    this.budgetService.selectedLineItem(this.lineItem);
+  }
+
   onUpdateNumbers(lineItemProperty: string, newItemValue: string) {
     if (this.lineItem[lineItemProperty] == newItemValue) return;
     console.log(lineItemProperty);
