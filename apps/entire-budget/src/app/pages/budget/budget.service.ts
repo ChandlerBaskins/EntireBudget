@@ -62,7 +62,10 @@ export class BudgetService {
         (li) => li.id === selectedItem.id
       );
       return selectedLineItem;
-    })
+    }),
+    distinctUntilChanged(),
+    tap(console.log),
+    shareReplay()
   );
 
   //Support Methods

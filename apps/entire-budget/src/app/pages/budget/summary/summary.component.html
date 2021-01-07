@@ -1,62 +1,65 @@
-<div class="border-2 border-gray-600 h-96 fixed mt-18">
+<div class="border-2 border-gray-600 h-96 fixed mt-18 w-35">
   <div class="h-24 blue flex justify-between">
     <h3 class="text-gray-100">Summary</h3>
     <button (click)="onAddNewGroup()" class="self-start">ADD GROUP</button>
   </div>
-  <div class="h-400 w-400">
-    <ngx-charts-pie-chart
-      [scheme]="colorScheme"
-      [results]="single"
-      [gradient]="gradient"
-      [legend]="showLegend"
-      [legendPosition]="legendPosition"
-      [labels]="showLabels"
-      [doughnut]="isDoughnut"
-      [legend]="false"
-    >
-    </ngx-charts-pie-chart>
-  </div>
+  <ng-container *ngIf="selectedItem$ | async as item; else noItem">
+    <div class="h-400 w-400">
+      <ngx-charts-pie-chart
+        [scheme]="colorScheme"
+        [results]="single"
+        [gradient]="gradient"
+        [legend]="showLegend"
+        [legendPosition]="legendPosition"
+        [labels]="showLabels"
+        [doughnut]="isDoughnut"
+        [legend]="false"
+      >
+      </ngx-charts-pie-chart>
+    </div>
 
-  <div class="bg-white h-48">
-    <div class="flex justify-around border-b">
-      <button class="active">Planned</button>
-      <button>Recieved</button>
-      <button>Spent</button>
+    <div class="bg-white h-48">
+      <div class="flex justify-around border-b">
+        <button class="active">Planned</button>
+        <button>Recieved</button>
+        <button>Spent</button>
+      </div>
+      <div class="flex justify-around">
+        <p>Giving</p>
+        <p>$300</p>
+        <p>(34%)</p>
+      </div>
+      <div class="flex justify-around">
+        <p>Giving</p>
+        <p>$300</p>
+        <p>(34%)</p>
+      </div>
+      <div class="flex justify-around">
+        <p>Giving</p>
+        <p>$300</p>
+        <p>(34%)</p>
+      </div>
+      <div class="flex justify-around">
+        <p>Giving</p>
+        <p>$300</p>
+        <p>(34%)</p>
+      </div>
+      <div class="flex justify-around">
+        <p>Giving</p>
+        <p>$300</p>
+        <p>(34%)</p>
+      </div>
+      <div class="flex justify-around">
+        <p>Giving</p>
+        <p>$300</p>
+        <p>(34%)</p>
+      </div>
+      <div class="flex justify-around">
+        <p>Giving</p>
+        <p>$300</p>
+        <p>(34%)</p>
+      </div>
     </div>
-    <div class="flex justify-around">
-      <p>Giving</p>
-      <p>$300</p>
-      <p>(34%)</p>
-    </div>
-    <div class="flex justify-around">
-      <p>Giving</p>
-      <p>$300</p>
-      <p>(34%)</p>
-    </div>
-    <div class="flex justify-around">
-      <p>Giving</p>
-      <p>$300</p>
-      <p>(34%)</p>
-    </div>
-    <div class="flex justify-around">
-      <p>Giving</p>
-      <p>$300</p>
-      <p>(34%)</p>
-    </div>
-    <div class="flex justify-around">
-      <p>Giving</p>
-      <p>$300</p>
-      <p>(34%)</p>
-    </div>
-    <div class="flex justify-around">
-      <p>Giving</p>
-      <p>$300</p>
-      <p>(34%)</p>
-    </div>
-    <div class="flex justify-around">
-      <p>Giving</p>
-      <p>$300</p>
-      <p>(34%)</p>
-    </div>
-  </div>
+    <ng-template #noItem>NO T</ng-template>
+  </ng-container>
 </div>
