@@ -10,14 +10,14 @@
     <input
       class="w-8 mx-2 text-gray-700 text-sm"
       (focus)="onClick($event)"
-      (blur)="onUpdateNumbers('budgetedAmount', $event.target.value)"
+      (blur)="onBlur('budgetedAmount', $event.target.value)"
       [formControl]="lineItemBudgeted"
       type="text"
     />
     <input
       class="w-8 mx-2 text-gray-700 text-sm"
       (focus)="onClick($event)"
-      (blur)="onUpdateNumbers('planned', $event.target.value)"
+      (blur)="onBlur('planned', $event.target.value)"
       [formControl]="lineItemPaid"
       type="text"
     />

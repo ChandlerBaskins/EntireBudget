@@ -48,13 +48,15 @@ export class BudgetService {
     tap((v) => console.log('THe final VALue', v)),
     shareReplay(1)
   );
-  selectedLineItemAction = new Subject<LineItem>();
+  private selectedLineItemAction = new Subject<LineItem>();
 
   selectedLineItem$ = combineLatest([
     this.crudBudgetGroups$,
     this.selectedLineItemAction,
   ]).pipe(
     map(([budgetGroup, selectedItem]) => {
+      if (!selectedItem) return null;
+      //is this really neccessary
       const selectedGroup = budgetGroup.find(
         (group) => group.id === selectedItem.budgetGroupId
       );
@@ -64,8 +66,8 @@ export class BudgetService {
       return selectedLineItem;
     }),
     distinctUntilChanged(),
-    tap(console.log),
-    shareReplay()
+    shareReplay(),
+    tap(console.log)
   );
 
   //Support Methods
