@@ -43,6 +43,7 @@ export class BudgetCardComponent implements OnChanges {
   }
 
   ngOnChanges() {
+    console.log(this.group.groupName);
     this.control = new FormControl(this.group.groupName);
   }
 }

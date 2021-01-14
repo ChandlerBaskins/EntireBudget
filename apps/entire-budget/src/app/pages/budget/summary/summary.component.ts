@@ -10,7 +10,7 @@ import { ActionCommand, BudgetService, CRUD } from '../budget.service';
 export class SummaryComponent {
   constructor(private budgetService: BudgetService) {}
 
-  selectedItem$ = this.budgetService.selectedLineItem$.pipe(tap(console.log));
+  selectedItem$ = this.budgetService.selectedLineItem$;
   single = [
     {
       name: 'Germany',

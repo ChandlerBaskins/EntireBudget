@@ -4,7 +4,9 @@
     <button (click)="onAddNewGroup()" class="self-start">ADD GROUP</button>
   </div>
   <ng-container *ngIf="selectedItem$ | async as item; else summary">
-    <div>{{ item | json }}</div>
+    <div>
+      {{ item | json }}
+    </div>
   </ng-container>
   <ng-template #summary>
     <div class="h-400 w-400">

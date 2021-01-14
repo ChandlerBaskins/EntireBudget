@@ -37,4 +37,5 @@ export interface Transaction {
   amount: number;
   date: string;
   paidTo?: string;
+  notes?: string;
 }
