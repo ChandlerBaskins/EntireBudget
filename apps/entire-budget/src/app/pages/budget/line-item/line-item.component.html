@@ -15,8 +15,11 @@
       type="text"
     />
     <p class="w-8 mx-2 text-gray-700 text-sm">{{ lineItem.planned }}</p>
-    <button class="bg-blue-700 text-gray-200 py-1 px-3" (click)="onRemove()">
-      X
+    <button
+      class="delete bg-blue-700 text-gray-200 py-1 px-3"
+      (click)="onRemove()"
+    >
+      <img src="assets/delete.svg" alt="delete" />
     </button>
   </div>
 </div>
