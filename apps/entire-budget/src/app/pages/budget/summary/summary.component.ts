@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { distinctUntilChanged } from 'rxjs/operators';
 import { BudgetGroup } from '../../../models';
 import { ActionCommand, BudgetService, CRUD } from '../budget.service';
 @Component({
@@ -7,9 +8,9 @@ import { ActionCommand, BudgetService, CRUD } from '../budget.service';
   styleUrls: ['./summary.component.scss'],
 })
 export class SummaryComponent {
-  constructor(private budgetService: BudgetService) {
-    this.budgetService.selectedLineItem$.subscribe(console.log);
-  }
+  constructor(private budgetService: BudgetService) {}
+
+  selectedItem$ = this.budgetService.selectedLineItem$;
   single = [
     {
       name: 'Germany',

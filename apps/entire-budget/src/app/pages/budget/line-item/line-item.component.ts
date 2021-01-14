@@ -22,6 +22,7 @@ export class LineItemComponent implements OnChanges {
   }
 
   onUpdateName(lineItem: LineItem, newItemName: string) {
+    this.budgetService.selectedLineItem(null);
     if (lineItem.name === newItemName) return;
 
     const updatedLineItem = { ...lineItem, name: newItemName };
@@ -35,9 +36,10 @@ export class LineItemComponent implements OnChanges {
     this.budgetService.selectedLineItem(this.lineItem);
   }
 
-  onUpdateNumbers(lineItemProperty: string, newItemValue: string) {
-    if (this.lineItem[lineItemProperty] == newItemValue) return;
+  onBlur(lineItemProperty: string, newItemValue: string) {
     console.log(lineItemProperty);
+    this.budgetService.selectedLineItem(null);
+    if (this.lineItem[lineItemProperty] == newItemValue) return;
     const itemValue = Number(newItemValue);
     const updatedLineItem = { ...this.lineItem, [lineItemProperty]: itemValue };
     const item: ActionCommand = { command: CRUD.UPDATE, item: updatedLineItem };
