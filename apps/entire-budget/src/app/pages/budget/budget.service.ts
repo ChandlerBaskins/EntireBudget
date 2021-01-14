@@ -51,7 +51,7 @@ export class BudgetService {
     scan((budgetGroup: BudgetGroup[], action: ActionCommand) =>
       this.doCRUD(budgetGroup, action)
     ),
-    tap((v) => console.log('THe final VALue', v)),
+    tap(console.log),
     shareReplay(1)
   );
   private selectedLineItemAction = new BehaviorSubject<LineItem>(null);
@@ -93,12 +93,28 @@ export class BudgetService {
     if (action.command === CRUD.CREATE && isLineItem(action.item)) {
       return this.createNewLineItem(budgetGroup, action.item);
     }
+    if (action.command === CRUD.DELETE && isLineItem(action.item)) {
+      return this.deleteLineItem(budgetGroup, action.item);
+    }
     if (action.command === CRUD.CREATE && !isLineItem(action.item)) {
       return this.createNewBudgetGroup(budgetGroup, action.item);
     }
     if (action.command === CRUD.UPDATE && !isLineItem(action.item)) {
       return this.updateBudget(budgetGroup, action.item);
     }
+  }
+
+  deleteLineItem(budgetGroup: BudgetGroup[], deletedItem: LineItem) {
+    const group = budgetGroup.find(
+      (group) => group.id === deletedItem.budgetGroupId
+    );
+
+    const updatedGroup: BudgetGroup = {
+      ...group,
+      lineItems: group.lineItems.filter((i) => i.id !== deletedItem.id),
+    };
+    console.log(updatedGroup);
+    return this.updateBudget(budgetGroup, updatedGroup);
   }
 
   updateLineItem(budgetGroup: BudgetGroup[], newLineItem: LineItem) {
@@ -167,6 +183,8 @@ export class BudgetService {
     const group = budgetGroup.find((group) => group.id === budget.id);
     //budget groups index
     const groupIDX = budgetGroup.indexOf(group);
+    if (Object.prototype.hasOwnProperty.call(budget, 'newName')) {
+    }
     const newGroup = { ...budget, groupName: budget.newName };
     const baseArr = budgetGroup.filter((g) => g.id !== group.id);
     //split the array and insert the new item

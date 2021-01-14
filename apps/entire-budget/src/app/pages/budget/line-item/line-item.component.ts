@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ActionOrActionWithState } from '@nrwl/angular/src/runtime/nx/data-persistence';
 import { tap } from 'rxjs/operators';
 import { LineItem } from '../../../models';
 import { ActionCommand, BudgetService, CRUD } from '../budget.service';
@@ -32,6 +33,11 @@ export class LineItemComponent implements OnChanges {
   onClick(event) {
     event.target.select();
     this.budgetService.selectedLineItem(this.lineItem);
+  }
+
+  onRemove() {
+    const item: ActionCommand = { command: CRUD.DELETE, item: this.lineItem };
+    this.budgetService.onCommand(item);
   }
 
   onBlur(lineItemProperty: string, newItemValue: string) {
