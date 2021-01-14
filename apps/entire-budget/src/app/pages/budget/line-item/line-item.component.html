@@ -14,13 +14,14 @@
       [formControl]="lineItemBudgeted"
       type="text"
     />
-    <input
+    <p class="w-8 mx-2 text-gray-700 text-sm">{{ lineItem.planned }}</p>
+    <!-- <input
       class="w-8 mx-2 text-gray-700 text-sm"
       (focus)="onClick($event)"
       (blur)="onBlur('planned', $event.target.value)"
       [formControl]="lineItemPaid"
       type="text"
-    />
+    /> -->
     <!-- <p class="mx-2 text-gray-700 text-sm">${{ lineItem.planned }}</p>
     <p class="mx-2 text-gray-700 text-sm">${{ lineItem.budgetedAmount }}</p> -->
   </div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { BudgetGroup } from '../../../models';
 import { ActionCommand, BudgetService, CRUD } from '../budget.service';
 @Component({
@@ -10,7 +10,7 @@ import { ActionCommand, BudgetService, CRUD } from '../budget.service';
 export class SummaryComponent {
   constructor(private budgetService: BudgetService) {}
 
-  selectedItem$ = this.budgetService.selectedLineItem$;
+  selectedItem$ = this.budgetService.selectedLineItem$.pipe(tap(console.log));
   single = [
     {
       name: 'Germany',

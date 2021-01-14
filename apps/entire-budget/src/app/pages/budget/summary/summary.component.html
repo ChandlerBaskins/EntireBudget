@@ -3,7 +3,10 @@
     <h3 class="text-gray-100">Summary</h3>
     <button (click)="onAddNewGroup()" class="self-start">ADD GROUP</button>
   </div>
-  <ng-container *ngIf="selectedItem$ | async as item; else noItem">
+  <ng-container *ngIf="selectedItem$ | async as item; else summary">
+    <div>{{ item | json }}</div>
+  </ng-container>
+  <ng-template #summary>
     <div class="h-400 w-400">
       <ngx-charts-pie-chart
         [scheme]="colorScheme"
@@ -59,7 +62,6 @@
         <p>$300</p>
         <p>(34%)</p>
       </div>
-    </div>
-    <ng-template #noItem>t</ng-template>
-  </ng-container>
+    </div></ng-template
+  >
 </div>

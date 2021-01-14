@@ -1,6 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { combineLatest, merge, Subject, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  merge,
+  Subject,
+  throwError,
+} from 'rxjs';
 import {
   catchError,
   distinctUntilChanged,
@@ -48,27 +54,27 @@ export class BudgetService {
     tap((v) => console.log('THe final VALue', v)),
     shareReplay(1)
   );
-  private selectedLineItemAction = new Subject<LineItem>();
-
-  selectedLineItem$ = combineLatest([
-    this.crudBudgetGroups$,
-    this.selectedLineItemAction,
-  ]).pipe(
-    map(([budgetGroup, selectedItem]) => {
-      if (!selectedItem) return null;
-      //is this really neccessary
-      const selectedGroup = budgetGroup.find(
-        (group) => group.id === selectedItem.budgetGroupId
-      );
-      const selectedLineItem = selectedGroup.lineItems.find(
-        (li) => li.id === selectedItem.id
-      );
-      return selectedLineItem;
-    }),
-    distinctUntilChanged(),
-    shareReplay(),
-    tap(console.log)
-  );
+  private selectedLineItemAction = new BehaviorSubject<LineItem>(null);
+  selectedLineItem$ = this.selectedLineItemAction.asObservable();
+  // selectedLineItem$ = combineLatest([
+  //   this.crudBudgetGroups$,
+  //   this.selectedLineItemAction,
+  // ]).pipe(
+  //   map(([budgetGroup, selectedItem]) => {
+  //     if (!selectedItem) return null;
+  //     //is this really neccessary
+  //     const selectedGroup = budgetGroup.find(
+  //       (group) => group.id === selectedItem.budgetGroupId
+  //     );
+  //     const selectedLineItem = selectedGroup.lineItems.find(
+  //       (li) => li.id === selectedItem.id
+  //     );
+  //     return selectedLineItem;
+  //   }),
+  //   distinctUntilChanged(),
+  //   shareReplay(),
+  //   tap(console.log)
+  // );
 
   //Support Methods
 
